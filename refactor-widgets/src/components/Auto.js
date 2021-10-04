@@ -1,26 +1,25 @@
 import React from 'react';
+import { useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-class AutoComplete extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputVal: '',
-    };
-  }
+// class AutoComplete extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       inputVal: '',
+//     };
+//   }
+const AutoComplete = ({names}) => {
+    const [inputVal, setInputVal] = useState('');
+    const handleInput = (e) => {setInputVal(e.target.value)}
 
-  handleInput = (e) => {
-    this.setState({ inputVal: e.target.value });
-  }
+    // const name = e.target.innerText;
+    // this.setState({ inputVal: name });
+    const selectName = (e) => {setInputVal(e.target.innerText);}
 
-  selectName = (e) => {
-    const name = e.target.innerText;
-    this.setState({ inputVal: name });
-  }
-
-  matches = () => {
-    const { inputVal } = this.state;
-    const { names } = this.props;
+  const matches = () => {
+    // const { inputVal } = this.state;
+    // const { names } = this.props;
     const inputLength = inputVal.length;
     const matches = [];
 
@@ -38,8 +37,8 @@ class AutoComplete extends React.Component {
     return matches;
   }
 
-  render() {
-    const results = this.matches().map((result) => (
+//   render() {
+    const results = matches().map((result) => (
       <CSSTransition
         key={result}
         classNames="result"
@@ -54,11 +53,11 @@ class AutoComplete extends React.Component {
         <h1>Autocomplete</h1>
         <div className="auto">
           <input
-            onChange={this.handleInput}
-            value={this.state.inputVal}
+            onChange={handleInput}
+            value={inputVal}
             placeholder="Search..."
           />
-          <ul className="auto-dropdown" onClick={this.selectName}>
+          <ul className="auto-dropdown" onClick={selectName}>
             <TransitionGroup>
               {results}
             </TransitionGroup>
@@ -67,6 +66,6 @@ class AutoComplete extends React.Component {
       </section>
     );
   }
-};
+// };
 
 export default AutoComplete;
