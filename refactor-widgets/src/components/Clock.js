@@ -1,29 +1,40 @@
 import React from 'react';
+import {useState, useEffect} from 'react'
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: new Date()
-    };
+// class Clock extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       time: new Date()
+//     };
+//   }
+  const Clock = () => {
+    const [time, setTime] = useState(new Date());
+
+    useEffect(() => {
+      setInterval(tick, 1000)
+    }, []);
+
+    useEffect(() => {
+      clearInterval(time)
+    }, [time]);
+
+  // componentDidMount() {
+  //   this.interval = setInterval(this.tick, 1000);
+  // }
+
+  // componentWillUnmount() {
+  //   clearInterval(this.interval);
+  // }
+
+  const tick = () => {
+    setTime( new Date() );
   }
 
-  componentDidMount() {
-    this.interval = setInterval(this.tick, 1000);
-  }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  tick = () => {
-    this.setState({ time: new Date() });
-  }
-
-  render() {
-    let hours = this.state.time.getHours();
-    let minutes = this.state.time.getMinutes();
-    let seconds = this.state.time.getSeconds();
+    let hours = time.getHours();
+    let minutes = time.getMinutes();
+    let seconds = time.getSeconds();
 
     hours = (hours < 10) ? `0${hours}` : hours;
     minutes = (minutes < 10) ? `0${minutes}` : minutes;
@@ -41,11 +52,11 @@ class Clock extends React.Component {
               {hours}:{minutes}:{seconds} PDT
             </span>
           </p>
-          <p>Date: {this.state.time.toDateString()}</p>
+          <p>Date: {time.toDateString()}</p>
         </div>
       </section>
     );
   }
-};
+
 
 export default Clock;
